@@ -6,34 +6,34 @@ import (
 
 type ApiConfigs = apiConfigs
 
-// SetApiConfig configs to the specified ApiConfigs
-// No dynamic managed APIs by restish required.
+// SetApiConfig sets the configs.
 func SetApiConfig(c ApiConfigs) {
 	configs = c
 }
 
-// SetName sets the name of the APIConfig to the specified string
-// Setter for private field required.
+// SetName sets the name of the APIConfig.
 func (a *APIConfig) SetName(name string) {
 	a.name = name
 }
 
-// SetCurrentConfig sets the currentConfig to the specified one.
-// Setter for private variable required.
+// SetCurrentConfig sets the currentConfig.
 func SetCurrentConfig(apiName string) {
 	if cfg, ok := configs[apiName]; ok {
 		currentConfig = cfg
 	}
 }
 
+// SetTTY sets the tty.
 func SetTTY(b bool) {
 	tty = b
 }
 
+// SetAurora sets the aurora.
 func SetAurora(a aurora.Aurora) {
 	au = a
 }
 
+// ResetRegistries resets the registries used for internal bookkeeping.
 func ResetRegistries() {
 	authHandlers = map[string]AuthHandler{}
 	contentTypes = []contentTypeEntry{}
@@ -42,10 +42,12 @@ func ResetRegistries() {
 	loaders = []Loader{}
 }
 
+// GetGenericClosure exposes the internal generic function.
 func GetGenericClosure() func(method string, addr string, args []string) {
 	return generic
 }
 
+// GetEditClosure exposes the internal edit function.
 func GetEditClosure() func(
 	addr string,
 	args []string,
@@ -58,22 +60,27 @@ func GetEditClosure() func(
 	return edit
 }
 
+// InitConfig calls the internal initConfig function.
 func InitConfig(appName string) {
 	initConfig(appName, "")
 }
 
+// InitCache calls the internal initCache function.
 func InitCache(appName string) {
 	initCache(appName)
 }
 
+// MatchTemplate calls the internal matchTemplate function.
 func MatchTemplate(url, template string) string {
 	return matchTemplate(url, template)
 }
 
+// EnableVerbose sets the enableVerbose boolean to true.
 func EnableVerbose() {
 	enableVerbose = true
 }
 
+// IsVerbose returns the state of the internal enableVerbose boolean.
 func IsVerbose() bool {
 	return enableVerbose
 }
