@@ -6,14 +6,14 @@ import (
 	"github.com/spf13/viper"
 )
 
-type ApplianceConfigs = apiConfigs
+type ApiConfigs = apiConfigs
 
 // SetApiConfig sets the configs.
-func SetApiConfig(c ApplianceConfigs) {
+func SetApiConfig(c ApiConfigs) {
 	configs = c
 }
 
-func GetApplianceConfigs() ApplianceConfigs {
+func GetApplianceConfigs() ApiConfigs {
 	return configs
 }
 
