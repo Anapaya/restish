@@ -84,9 +84,8 @@ func EditRequest(
 	edit(addr, args, interactive, noPrompt, exitFunc, editMarshal, editUnmarshal, ext)
 }
 
-// InitConfig calls the internal initConfig function.
-func InitConfig(appName string) {
-	initConfig(appName, "")
+func UserHomeDir() string {
+	return userHomeDir()
 }
 
 // InitCache calls the internal initCache function.
@@ -109,7 +108,7 @@ func IsVerbose() bool {
 	return enableVerbose
 }
 
-// GetInteractiveConfigureClosure exposes the internal configure function
-func GetInteractiveConfigureClosure() func(cmd *cobra.Command, args []string) {
+// InteractiveConfigure calls the internal configure function
+func InteractiveConfigure() func(cmd *cobra.Command, args []string) {
 	return askInitAPIDefault
 }
