@@ -2,13 +2,19 @@ package cli
 
 import (
 	"github.com/logrusorgru/aurora"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
-type ApiConfigs = apiConfigs
+type ApplianceConfigs = apiConfigs
 
 // SetApiConfig sets the configs.
-func SetApiConfig(c ApiConfigs) {
+func SetApiConfig(c ApplianceConfigs) {
 	configs = c
+}
+
+func GetApplianceConfigs() ApplianceConfigs {
+	return configs
 }
 
 // SetName sets the name of the APIConfig.
@@ -16,11 +22,28 @@ func (a *APIConfig) SetName(name string) {
 	a.name = name
 }
 
+// GetName returns the name of the APIConfig
+func (a *APIConfig) GetName() string {
+	return a.name
+}
+
+// SetViper sets the restish viper variable
+func SetViper(v *viper.Viper) {
+	apis = v
+}
+
 // SetCurrentConfig sets the currentConfig.
-func SetCurrentConfig(apiName string) {
+func SetCurrentConfig(apiName string) bool {
 	if cfg, ok := configs[apiName]; ok {
 		currentConfig = cfg
+		return true
 	}
+	return false
+}
+
+// GetCurrentConfig returns the currently set APIConfig
+func GetCurrentConfig() *APIConfig {
+	return currentConfig
 }
 
 // SetTTY sets the tty.
@@ -84,4 +107,9 @@ func EnableVerbose() {
 // IsVerbose returns the state of the internal enableVerbose boolean.
 func IsVerbose() bool {
 	return enableVerbose
+}
+
+// GetInteractiveConfigureClosure exposes the internal configure function
+func GetInteractiveConfigureClosure() func(cmd *cobra.Command, args []string) {
+	return askInitAPIDefault
 }
