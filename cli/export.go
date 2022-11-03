@@ -46,6 +46,22 @@ func GetCurrentConfig() *APIConfig {
 	return currentConfig
 }
 
+// AddDefaultConfig adds the "https://localhost:443" to configs at runtime, does not modify the
+// persistent config file
+func AddDefaultConfig() {
+	configs["default"] = &APIConfig{
+		name:     "default",
+		Base:     "https://localhost:443",
+		Profiles: map[string]*APIProfile{},
+		TLS: &TLSConfig{
+			InsecureSkipVerify: viper.GetBool("rsh-insecure"),
+			Cert:               viper.GetString("rsh-client-cert"),
+			Key:                viper.GetString("rsh-client-key"),
+			CACert:             viper.GetString("rsh-ca-cert"),
+		},
+	}
+}
+
 // SetTTY sets the tty.
 func SetTTY(b bool) {
 	tty = b
