@@ -1,6 +1,8 @@
 package cli
 
 import (
+	"fmt"
+
 	"github.com/logrusorgru/aurora"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -127,4 +129,12 @@ func IsVerbose() bool {
 // InteractiveConfigure calls the internal configure function
 func InteractiveConfigure() func(cmd *cobra.Command, args []string) {
 	return askInitAPIDefault
+}
+
+func GetAuthHandlers(name string) (AuthHandler, error) {
+	auth, ok := authHandlers[name]
+	if !ok {
+		return nil, fmt.Errorf("corresponding authenthication handler missing")
+	}
+	return auth, nil
 }
