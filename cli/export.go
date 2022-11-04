@@ -42,22 +42,23 @@ func ResetRegistries() {
 	loaders = []Loader{}
 }
 
-// GetGenericClosure exposes the internal generic function.
-func GetGenericClosure() func(method string, addr string, args []string) {
-	return generic
+// GenericRequest exposes the internal generic function.
+func GenericRequest(method string, addr string, args []string) {
+	generic(method, addr, args)
 }
 
-// GetEditClosure exposes the internal edit function.
-func GetEditClosure() func(
+// EditRequest exposes the internal edit function.
+func EditRequest(
 	addr string,
 	args []string,
 	interactive,
 	noPrompt bool,
 	exitFunc func(int),
 	editMarshal func(interface{}) ([]byte, error),
-	editUnmarshal func([]byte, interface{}) error, ext string,
+	editUnmarshal func([]byte, interface{}) error,
+	ext string,
 ) {
-	return edit
+	edit(addr, args, interactive, noPrompt, exitFunc, editMarshal, editUnmarshal, ext)
 }
 
 // InitConfig calls the internal initConfig function.
