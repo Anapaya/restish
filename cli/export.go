@@ -15,7 +15,8 @@ func SetApiConfig(c ApiConfigs) {
 	configs = c
 }
 
-func GetApplianceConfigs() ApiConfigs {
+// GetAPIConfigs returns the map of configs
+func GetAPIConfigs() ApiConfigs {
 	return configs
 }
 
@@ -127,14 +128,14 @@ func IsVerbose() bool {
 }
 
 // InteractiveConfigure calls the internal configure function
-func InteractiveConfigure() func(cmd *cobra.Command, args []string) {
-	return askInitAPIDefault
+func InteractiveConfigure(cmd *cobra.Command, args []string) {
+	askInitAPIDefault(cmd, args)
 }
 
 func GetAuthHandlers(name string) (AuthHandler, error) {
 	auth, ok := authHandlers[name]
 	if !ok {
-		return nil, fmt.Errorf("corresponding authenthication handler missing")
+		return nil, fmt.Errorf("corresponding authentication handler missing")
 	}
 	return auth, nil
 }
