@@ -1,14 +1,23 @@
 package cli
 
 import (
+	"fmt"
+
 	"github.com/logrusorgru/aurora"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 type ApiConfigs = apiConfigs
 
-// SetApiConfig sets the configs.
-func SetApiConfig(c ApiConfigs) {
+// SetApiConfigs sets the configs.
+func SetApiConfigs(c ApiConfigs) {
 	configs = c
+}
+
+// GetAPIConfigs returns the map of configs
+func GetAPIConfigs() ApiConfigs {
+	return configs
 }
 
 // SetName sets the name of the APIConfig.
@@ -16,11 +25,34 @@ func (a *APIConfig) SetName(name string) {
 	a.name = name
 }
 
+// GetName returns the name of the APIConfig
+func (a *APIConfig) GetName() string {
+	return a.name
+}
+
+// SetApis sets the restish apis viper variable
+func SetApis(v *viper.Viper) {
+	apis = v
+}
+
 // SetCurrentConfig sets the currentConfig.
-func SetCurrentConfig(apiName string) {
+func SetCurrentConfig(apiName string) error {
 	if cfg, ok := configs[apiName]; ok {
 		currentConfig = cfg
+		return nil
 	}
+	return fmt.Errorf("no matching config found")
+}
+
+// GetCurrentConfig returns the currently set APIConfig
+func GetCurrentConfig() *APIConfig {
+	return currentConfig
+}
+
+// AddConfig adds a config to configs at runtime, does not modify the
+// persistent config file
+func AddConfig(cfg *APIConfig) {
+	configs[cfg.name] = cfg
 }
 
 // SetTTY sets the tty.
@@ -61,9 +93,8 @@ func EditRequest(
 	edit(addr, args, interactive, noPrompt, exitFunc, editMarshal, editUnmarshal, ext)
 }
 
-// InitConfig calls the internal initConfig function.
-func InitConfig(appName string) {
-	initConfig(appName, "")
+func UserHomeDir() string {
+	return userHomeDir()
 }
 
 // InitCache calls the internal initCache function.
@@ -84,4 +115,17 @@ func EnableVerbose() {
 // IsVerbose returns the state of the internal enableVerbose boolean.
 func IsVerbose() bool {
 	return enableVerbose
+}
+
+// InteractiveConfigure calls the internal configure function
+func InteractiveConfigure(cmd *cobra.Command, args []string) {
+	askInitAPIDefault(cmd, args)
+}
+
+func GetAuthHandlers(name string) (AuthHandler, error) {
+	auth, ok := authHandlers[name]
+	if !ok {
+		return nil, fmt.Errorf("corresponding authentication handler missing")
+	}
+	return auth, nil
 }
