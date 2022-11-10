@@ -10,8 +10,8 @@ import (
 
 type ApiConfigs = apiConfigs
 
-// SetApiConfig sets the configs.
-func SetApiConfig(c ApiConfigs) {
+// SetApiConfigs sets the configs.
+func SetApiConfigs(c ApiConfigs) {
 	configs = c
 }
 
@@ -49,20 +49,10 @@ func GetCurrentConfig() *APIConfig {
 	return currentConfig
 }
 
-// AddDefaultConfig adds the "https://localhost:443" to configs at runtime, does not modify the
+// AddConfig adds a config to configs at runtime, does not modify the
 // persistent config file
-func AddDefaultConfig() {
-	configs["default"] = &APIConfig{
-		name:     "default",
-		Base:     "https://localhost:443",
-		Profiles: map[string]*APIProfile{},
-		TLS: &TLSConfig{
-			InsecureSkipVerify: viper.GetBool("rsh-insecure"),
-			Cert:               viper.GetString("rsh-client-cert"),
-			Key:                viper.GetString("rsh-client-key"),
-			CACert:             viper.GetString("rsh-ca-cert"),
-		},
-	}
+func AddConfig(cfg *APIConfig) {
+	configs[cfg.name] = cfg
 }
 
 // SetTTY sets the tty.
