@@ -30,18 +30,18 @@ func (a *APIConfig) GetName() string {
 	return a.name
 }
 
-// SetViper sets the restish viper variable
-func SetViper(v *viper.Viper) {
+// SetApis sets the restish apis viper variable
+func SetApis(v *viper.Viper) {
 	apis = v
 }
 
 // SetCurrentConfig sets the currentConfig.
-func SetCurrentConfig(apiName string) bool {
+func SetCurrentConfig(apiName string) error {
 	if cfg, ok := configs[apiName]; ok {
 		currentConfig = cfg
-		return true
+		return nil
 	}
-	return false
+	return fmt.Errorf("no matching config found")
 }
 
 // GetCurrentConfig returns the currently set APIConfig
