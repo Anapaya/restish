@@ -35,20 +35,6 @@ func SetApis(v *viper.Viper) {
 	apis = v
 }
 
-// SetCurrentConfig sets the currentConfig.
-func SetCurrentConfig(apiName string) error {
-	if cfg, ok := configs[apiName]; ok {
-		currentConfig = cfg
-		return nil
-	}
-	return fmt.Errorf("no matching config found")
-}
-
-// GetCurrentConfig returns the currently set APIConfig
-func GetCurrentConfig() *APIConfig {
-	return currentConfig
-}
-
 // AddConfig adds a config to configs at runtime, does not modify the
 // persistent config file
 func AddConfig(cfg *APIConfig) {
