@@ -412,10 +412,7 @@ func askInitAPI(a asker, cmd *cobra.Command, args []string) {
 			options = append(options, "Edit profile "+k)
 		}
 
-		if (config.TLS != nil) && (*config.TLS != TLSConfig{}) {
-			options = append(options, "Edit TLS configuration")
-		}
-
+		options = append(options, "Edit TLS configuration")
 		options = append(options, "Save and exit")
 
 		choice := a.askSelect("Select option", options, nil, "")
