@@ -186,7 +186,7 @@ func MakeRequest(req *http.Request, options ...requestOption) (*http.Response, e
 		}
 
 		if config.TLS.InsecureSkipVerify {
-			LogWarning("Disabling TLS security checks")
+			LogDebug("Disabling TLS security checks")
 			t.TLSClientConfig.InsecureSkipVerify = config.TLS.InsecureSkipVerify
 		}
 		if config.TLS.Cert != "" {
