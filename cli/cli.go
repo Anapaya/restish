@@ -696,6 +696,7 @@ func Defaults() {
 	AddEncoding("br", &BrotliEncoding{})
 
 	// Register content type marshallers
+	AddContentType("pem", "application/x-pem-file", 0.9, &PEM{})
 	AddContentType("cbor", "application/cbor", 0.9, &CBOR{})
 	AddContentType("msgpack", "application/msgpack", 0.8, &MsgPack{})
 	AddContentType("ion", "application/ion", 0.6, &Ion{})
