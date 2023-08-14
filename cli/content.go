@@ -417,3 +417,22 @@ func (r Readable) Marshal(value interface{}) ([]byte, error) {
 func (i Readable) Unmarshal(data []byte, value interface{}) error {
 	return fmt.Errorf("unimplemented")
 }
+
+// PEM describes content types like `application/x-pem-file`
+type PEM struct{}
+
+// Detect if the content type is XPemFile.
+func (x PEM) Detect(contentType string) bool {
+	first := strings.Split(contentType, ";")[0]
+	return first == "application/x-pem-file"
+}
+
+// Marshal the value to encoded PEM.
+func (x PEM) Marshal(value interface{}) ([]byte, error) {
+	return Text{}.Marshal(value)
+}
+
+// Unmarshal the value from encoded PEM.
+func (x PEM) Unmarshal(data []byte, value interface{}) error {
+	return Text{}.Unmarshal(data, value)
+}
