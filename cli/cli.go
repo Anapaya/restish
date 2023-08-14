@@ -670,6 +670,7 @@ func Defaults() {
 	AddContentType("text", "text/*", 0.2, &Text{})
 	AddContentType("table", "", -1, &Table{})
 	AddContentType("readable", "", -1, &Readable{})
+	AddContentType("pem", "application/x-pem-file", 0.9, &PEM{})
 
 	// Add link relation parsers
 	AddLinkParser(&LinkHeaderParser{})
