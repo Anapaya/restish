@@ -19,6 +19,21 @@ var contentTests = []struct {
 	{"cbor", []string{"application/cbor", "foo+cbor"}, &CBOR{}, []byte("\xf6"), nil},
 	{"msgpack", []string{"application/msgpack", "application/x-msgpack", "application/vnd.msgpack", "foo+msgpack"}, &MsgPack{}, []byte("\x81\xa5\x68\x65\x6c\x6c\x6f\xa5\x77\x6f\x72\x6c\x64"), nil},
 	{"ion", []string{"application/ion", "foo+ion"}, &Ion{}, []byte("\xe0\x01\x00\xea\x0f"), []byte("null")},
+	{"pem", []string{"application/x-pem-file"}, &PEM{}, []byte(`-----BEGIN CERTIFICATE-----
+MIICNjCCAd2gAwIBAgIUIb156ksTUO9QRhMF2ByRzlMtOUUwCgYIKoZIzj0EAwIw
+dDEsMCoGA1UEAxMjQW5hcGF5YSBadXJpY2ggQ1AgQ0EgLSBHRU4gSSAyMDIxLjEx
+CzAJBgNVBAYTAkNIMRswGQYDVQQKExJBbmFwYXlhIFN5c3RlbXMgQUcxGjAYBgsr
+BgEEAYOwHAECARMJNjQtMjowOjEzMB4XDTIzMDgxMzE0NTgyOFoXDTIzMDgxNjE0
+NTg1OFowRjELMAkGA1UEBhMCQ0gxGzAZBgNVBAoTEkFuYXBheWEgU3lzdGVtcyBB
+RzEaMBgGCysGAQQBg7AcAQIBEwk2NC0yOjA6MWEwWTATBgcqhkjOPQIBBggqhkjO
+PQMBBwNCAASg9yRvjMeep0lBtdIEbCH1uDkn57ezTe7gUcJT/cNcJoCvAAJlrUpO
+YWd78Ev3MChpN8fvHcNMtqIKJvYa27cpo3sweTAfBgNVHSMEGDAWgBSbySNUc94B
+UBbzChXp3YlXzHuf2DAOBgNVHQ8BAf8EBAMCB4AwJwYDVR0lBCAwHgYIKwYBBQUH
+AwEGCCsGAQUFBwMCBggrBgEFBQcDCDAdBgNVHQ4EFgQUlTfZkFas9fg8fJdHuO9F
+Z5P7r2MwCgYIKoZIzj0EAwIDRwAwRAIgMk+SMPwDJAD4KDJ7OtS6Pv4NjPvqcbGN
+GVeJecGlNVoCIHcjskwpWHmYMnqwWXWK5cgYvtcorioNyFKQFiLaEyx5
+-----END CERTIFICATE-----
+`), nil},
 }
 
 func TestContentTypes(parent *testing.T) {
