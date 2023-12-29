@@ -8,7 +8,6 @@ import (
 	"path"
 	"path/filepath"
 	"sort"
-	"strings"
 
 	"github.com/google/shlex"
 	"github.com/spf13/cobra"
@@ -262,35 +261,25 @@ func initAPIConfig() {
 	}
 }
 
+var selectedAPI *APIConfig
+
+// SetSelectedAPI sets a global variable to the selected API configuration. This
+// is only needed to mitigate the issue with the upstream findAPI restish
+// function to get the correct API configuration.
+func SetSelectedAPI(cfg *APIConfig) {
+	selectedAPI = cfg
+}
+
+// findAPI in restish iterates through the configs and checks for the desired
+// one. This leads to non-deterministic lookups when two appliance contexts have
+// the same base URL configures. It also does not work if the base URL is not
+// configured with a URL schema. As we're using a different mechanism to track
+// the selected appliance context we do not need the findAPI function but we
+// need access to the currently selected appliance context.
 func findAPI(uri string) (string, *APIConfig) {
-	apiName := viper.GetString("api-name")
-
-	for name, config := range configs {
-		// fixes https://github.com/danielgtaylor/restish/issues/128
-		if len(apiName) > 0 && name != apiName {
-			continue
-		}
-
-		profile := viper.GetString("rsh-profile")
-		if profile != "default" {
-			if config.Profiles[profile] == nil {
-				continue
-			}
-			if config.Profiles[profile].Base != "" {
-				if strings.HasPrefix(uri, config.Profiles[profile].Base) {
-					return name, config
-				}
-			} else if strings.HasPrefix(uri, config.Base) {
-				return name, config
-			}
-		} else {
-			if strings.HasPrefix(uri, config.Base) {
-				// TODO: find the longest matching base?
-				return name, config
-			}
-		}
+	if selectedAPI != nil {
+		return selectedAPI.name, selectedAPI
 	}
-
 	return "", nil
 }
 

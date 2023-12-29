@@ -204,7 +204,7 @@ func MakeRequest(req *http.Request, options ...requestOption) (*http.Response, e
 		}
 
 		if config.TLS.InsecureSkipVerify {
-			LogWarning("Disabling TLS security checks")
+			LogDebug("Disabling TLS security checks")
 			t.TLSClientConfig.InsecureSkipVerify = config.TLS.InsecureSkipVerify
 		}
 		if config.TLS.Cert != "" {
@@ -296,7 +296,18 @@ func doRequestWithRetry(log bool, client *http.Client, req *http.Request) (*http
 	retries := viper.GetInt("rsh-retry")
 
 	if retries == 0 {
-		return client.Do(req)
+		start := time.Now()
+
+		if log {
+			LogDebugRequest(req)
+		}
+
+		resp, err := client.Do(req)
+		if log {
+			LogDebugResponse(start, resp)
+		}
+
+		return resp, err
 	}
 
 	var bodyContents []byte
