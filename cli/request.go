@@ -42,6 +42,10 @@ func fixAddress(addr string) string {
 		addr = "http://localhost" + addr
 	}
 
+	if strings.HasPrefix(addr, "https+unix") {
+		return addr
+	}
+
 	if !strings.HasPrefix(addr, "http://") && !strings.HasPrefix(addr, "https://") {
 		// Does the first part match a known API? If so, replace it with
 		// the base URL for that API.
