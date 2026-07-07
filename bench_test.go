@@ -10,7 +10,7 @@ import (
 	"github.com/fxamacker/cbor/v2"
 	"github.com/rest-sh/restish/cli"
 	"github.com/rest-sh/restish/openapi"
-	"github.com/shamaton/msgpack/v2"
+	"github.com/shamaton/msgpack/v3"
 	"github.com/spf13/cobra"
 )
 

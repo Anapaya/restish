@@ -13,7 +13,6 @@ require (
 	github.com/danielgtaylor/casing v0.0.0-20210126043903-4e55e6373ac3
 	github.com/danielgtaylor/mexpr v1.8.0
 	github.com/danielgtaylor/shorthand/v2 v2.1.1
-	github.com/eliukblau/pixterm v1.3.1
 	github.com/fxamacker/cbor/v2 v2.4.0
 	github.com/gbl08ma/httpcache v1.0.2
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
@@ -50,7 +49,6 @@ require (
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/disintegration/imaging v1.6.2 // indirect
 	github.com/dlclark/regexp2 v1.7.0 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
@@ -89,7 +87,6 @@ require (
 	github.com/x448/float16 v0.8.4 // indirect
 	github.com/yuin/goldmark v1.5.3 // indirect
 	github.com/yuin/goldmark-emoji v1.0.1 // indirect
-	golang.org/x/image v0.18.0 // indirect
 	golang.org/x/net v0.38.0 // indirect
 	golang.org/x/sys v0.31.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
