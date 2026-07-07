@@ -6,11 +6,8 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/amzn/ion-go/ion"
-	"github.com/fxamacker/cbor/v2"
 	"github.com/rest-sh/restish/cli"
 	"github.com/rest-sh/restish/openapi"
-	"github.com/shamaton/msgpack/v3"
 	"github.com/spf13/cobra"
 )
 
@@ -53,22 +50,7 @@ func BenchmarkFormats(b *testing.B) {
 			panic(err)
 		}
 
-		dataCBOR, err := cbor.Marshal(doc)
-		if err != nil {
-			panic(err)
-		}
-
-		dataMsgPack, err := msgpack.Marshal(doc)
-		if err != nil {
-			panic(err)
-		}
-
-		dataIon, err := ion.MarshalBinary(doc)
-		if err != nil {
-			panic(err)
-		}
-
-		fmt.Printf("json: %d\ncbor: %d\nmsgp: %d\n ion: %d\n", len(dataJSON), len(dataCBOR), len(dataMsgPack), len(dataIon))
+		fmt.Printf("json: %d\n", len(dataJSON))
 
 		b.Run(t.Name+"-json-marshal", func(b *testing.B) {
 			b.ReportAllocs()
@@ -82,51 +64,6 @@ func BenchmarkFormats(b *testing.B) {
 			for n := 0; n < b.N; n++ {
 				var tmp cli.API
 				json.Unmarshal(dataJSON, &tmp)
-			}
-		})
-
-		b.Run(t.Name+"-cbor-marshal", func(b *testing.B) {
-			b.ReportAllocs()
-			for n := 0; n < b.N; n++ {
-				cbor.Marshal(doc)
-			}
-		})
-
-		b.Run(t.Name+"-cbor-unmarshal", func(b *testing.B) {
-			b.ReportAllocs()
-			for n := 0; n < b.N; n++ {
-				var tmp cli.API
-				cbor.Unmarshal(dataCBOR, &tmp)
-			}
-		})
-
-		b.Run(t.Name+"-msgpack-marshal", func(b *testing.B) {
-			b.ReportAllocs()
-			for n := 0; n < b.N; n++ {
-				msgpack.Marshal(doc)
-			}
-		})
-
-		b.Run(t.Name+"-msgpack-unmarshal", func(b *testing.B) {
-			b.ReportAllocs()
-			for n := 0; n < b.N; n++ {
-				var tmp cli.API
-				msgpack.Unmarshal(dataMsgPack, &tmp)
-			}
-		})
-
-		b.Run(t.Name+"-ion-marshal", func(b *testing.B) {
-			b.ReportAllocs()
-			for n := 0; n < b.N; n++ {
-				ion.MarshalBinary(doc)
-			}
-		})
-
-		b.Run(t.Name+"-ion-unmarshal", func(b *testing.B) {
-			b.ReportAllocs()
-			for n := 0; n < b.N; n++ {
-				var tmp cli.API
-				ion.Unmarshal(dataIon, &tmp)
 			}
 		})
 	}

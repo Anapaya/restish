@@ -532,13 +532,6 @@ func (f *DefaultFormatter) formatAuto(format string, resp Response) ([]byte, err
 		encoded = []byte(text)
 	}
 
-	ct := resp.Headers["Content-Type"]
-	if resp.Body != nil && (ct == "image/png" || ct == "image/jpeg" || ct == "image/webp" || ct == "image/gif") {
-		if _, ok := resp.Body.([]byte); ok {
-			LogWarning("Unable to display image: %v", err)
-		}
-	}
-
 	if b, ok := printable(resp.Body); ok {
 		return append(encoded, f.nl(b)...), nil
 	}

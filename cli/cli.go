@@ -697,9 +697,6 @@ func Defaults() {
 
 	// Register content type marshallers
 	AddContentType("pem", "application/x-pem-file", 0.9, &PEM{})
-	AddContentType("cbor", "application/cbor", 0.9, &CBOR{})
-	AddContentType("msgpack", "application/msgpack", 0.8, &MsgPack{})
-	AddContentType("ion", "application/ion", 0.6, &Ion{})
 	AddContentType("json", "application/json", 0.5, &JSON{})
 	AddContentType("yaml", "application/yaml", 0.5, &YAML{})
 	AddContentType("text", "text/*", 0.2, &Text{})

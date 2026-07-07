@@ -7,7 +7,6 @@ require (
 	github.com/ThalesIgnite/crypto11 v1.2.5
 	github.com/alecthomas/chroma v0.10.0
 	github.com/alexeyco/simpletable v1.0.0
-	github.com/amzn/ion-go v1.1.3
 	github.com/andybalholm/brotli v1.0.4
 	github.com/charmbracelet/glamour v0.6.0
 	github.com/danielgtaylor/casing v0.0.0-20210126043903-4e55e6373ac3
@@ -26,7 +25,6 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/pb33f/libopenapi v0.22.3
 	github.com/schollz/progressbar/v3 v3.12.2
-	github.com/shamaton/msgpack/v3 v3.1.2
 	github.com/spf13/afero v1.9.3
 	github.com/spf13/cobra v1.6.1
 	github.com/spf13/pflag v1.0.5

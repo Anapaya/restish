@@ -16,9 +16,6 @@ var contentTests = []struct {
 	{"text", []string{"text/plain", "text/html"}, &Text{}, []byte("hello world"), nil},
 	{"json", []string{"application/json", "foo+json"}, &JSON{}, []byte("{\"hello\":\"world\"}\n"), []byte("{\n  \"hello\": \"world\"\n}\n")},
 	{"yaml", []string{"application/yaml", "foo+yaml"}, &YAML{}, []byte("hello: world\n"), nil},
-	{"cbor", []string{"application/cbor", "foo+cbor"}, &CBOR{}, []byte("\xf6"), nil},
-	{"msgpack", []string{"application/msgpack", "application/x-msgpack", "application/vnd.msgpack", "foo+msgpack"}, &MsgPack{}, []byte("\x81\xa5\x68\x65\x6c\x6c\x6f\xa5\x77\x6f\x72\x6c\x64"), nil},
-	{"ion", []string{"application/ion", "foo+ion"}, &Ion{}, []byte("\xe0\x01\x00\xea\x0f"), []byte("null")},
 	{"pem", []string{"application/x-pem-file"}, &PEM{}, []byte(`-----BEGIN CERTIFICATE-----
 MIICNjCCAd2gAwIBAgIUIb156ksTUO9QRhMF2ByRzlMtOUUwCgYIKoZIzj0EAwIw
 dDEsMCoGA1UEAxMjQW5hcGF5YSBadXJpY2ggQ1AgQ0EgLSBHRU4gSSAyMDIxLjEx

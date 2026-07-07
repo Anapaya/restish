@@ -10,9 +10,6 @@ import (
 	"strings"
 
 	"github.com/alexeyco/simpletable"
-	"github.com/amzn/ion-go/ion"
-	"github.com/fxamacker/cbor/v2"
-	"github.com/shamaton/msgpack/v3"
 	"gopkg.in/yaml.v2"
 )
 
@@ -343,88 +340,6 @@ func (y YAML) Marshal(value interface{}) ([]byte, error) {
 // Unmarshal the value from encoded YAML.
 func (y YAML) Unmarshal(data []byte, value interface{}) error {
 	return yaml.Unmarshal(data, value)
-}
-
-// CBOR describes content types like `application/cbor` or
-// `application/foo+cbor`. http://cbor.io/
-type CBOR struct{}
-
-// Detect if the content type is YAML.
-func (c CBOR) Detect(contentType string) bool {
-	first := strings.Split(contentType, ";")[0]
-	if first == "application/cbor" || strings.HasSuffix(first, "+cbor") {
-		return true
-	}
-
-	return false
-}
-
-// Marshal the value to encoded YAML.
-func (c CBOR) Marshal(value interface{}) ([]byte, error) {
-	return cbor.Marshal(value)
-}
-
-// Unmarshal the value from encoded YAML.
-func (c CBOR) Unmarshal(data []byte, value interface{}) error {
-	return cbor.Unmarshal(data, value)
-}
-
-// MsgPack describes content types like `application/msgpack` or
-// `application/foo+msgpack`. https://msgpack.org/
-type MsgPack struct{}
-
-// Detect if the content type is YAML.
-func (m MsgPack) Detect(contentType string) bool {
-	first := strings.Split(contentType, ";")[0]
-	if first == "application/msgpack" || first == "application/x-msgpack" || first == "application/vnd.msgpack" || strings.HasSuffix(first, "+msgpack") {
-		return true
-	}
-
-	return false
-}
-
-// Marshal the value to encoded YAML.
-func (m MsgPack) Marshal(value interface{}) ([]byte, error) {
-	return msgpack.Marshal(value)
-}
-
-// Unmarshal the value from encoded YAML.
-func (m MsgPack) Unmarshal(data []byte, value interface{}) error {
-	return msgpack.Unmarshal(data, value)
-}
-
-// Ion describes content types like `application/ion`.
-type Ion struct{}
-
-// Detect if the content type is Ion.
-func (i Ion) Detect(contentType string) bool {
-	first := strings.Split(contentType, ";")[0]
-	if first == "application/ion" || strings.HasSuffix(first, "+ion") {
-		return true
-	}
-
-	return false
-}
-
-// Marshal the value to encoded binary Ion.
-func (i Ion) Marshal(value interface{}) ([]byte, error) {
-	return ion.MarshalBinary(makeJSONSafe(value))
-}
-
-// MarshalPretty the value to pretty encoded JSON.
-func (i Ion) MarshalPretty(value interface{}) ([]byte, error) {
-	buf := bytes.NewBuffer(nil)
-	tw := ion.NewTextWriterOpts(buf, ion.TextWriterPretty|ion.TextWriterQuietFinish)
-	err := ion.MarshalTo(tw, makeJSONSafe(value))
-	if err != nil {
-		return nil, err
-	}
-	return buf.Bytes(), nil
-}
-
-// Unmarshal the value form encoded binary or text Ion.
-func (i Ion) Unmarshal(data []byte, value interface{}) error {
-	return ion.Unmarshal(data, value)
 }
 
 // Readable describes a readable marshaller.
